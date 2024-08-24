@@ -9,7 +9,6 @@ type User {
 }
 
 type Query {
-   users: [User!],
    authUser: User,
    user(userId: ID!): User
 }
@@ -38,3 +37,10 @@ type LogoutResponse {
 `
 
 export default userTypeDef
+
+
+// type Query {
+//    users: [User!],
+//    authUser: User,
+//    user(userId: ID!): User
+// }

@@ -1,6 +1,6 @@
-import passport from 'passport'
 import bcrypt from 'bcryptjs'
 import { GraphQLLocalStrategy } from 'graphql-passport'
+import passport from 'passport'
 import User from '../models/user.model.js'
 
 export const configurePassport = async () => {
@@ -22,7 +22,7 @@ export const configurePassport = async () => {
 		new GraphQLLocalStrategy(async (username, password, done) => {
 			try {
 				const user = await User.findOne({ username })
-				const validPassword = bcrypt.compare(password, user.password)
+				const validPassword = await bcrypt.compare(password, user.password)
 				if (!user) {
 					return done(null, false, { message: 'Incorrect username' })
 				}
