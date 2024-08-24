@@ -1,12 +1,13 @@
 import { ApolloServer } from '@apollo/server'
-import mergedResolvers from './resolvers/index.js'
-import mergedTypeDefs from './typeDefs/index.js'
-import http from 'http'
+import { expressMiddleware } from '@apollo/server/express4'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import cors from 'cors'
-import { expressMiddleware } from '@apollo/server/express4'
-import express from 'express'
 import dotenv from 'dotenv'
+import express from 'express'
+import http from 'http'
+import { connectDB } from './db/connectDB.js'
+import mergedResolvers from './resolvers/index.js'
+import mergedTypeDefs from './typeDefs/index.js'
 
 dotenv.config()
 
@@ -29,6 +30,8 @@ app.use(
 		context: async ({ req, res }) => ({ req }),
 	}),
 )
+
+await connectDB()
 
 await new Promise(resolve => httpServer.listen({ port: 4000 }, resolve))
 
